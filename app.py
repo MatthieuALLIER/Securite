@@ -24,7 +24,7 @@ head = dbc.Container([
     dbc.Tabs(
         [
             dbc.Tab(label="Accueil", tab_id="Accueil"),
-            dbc.Tab(label="Statistique", tab_id="Statistique"),
+            dbc.Tab(label="Statistiques", tab_id="Statistiques"),
             dbc.Tab(label="Historique", tab_id="Historique")
         ],
         id="tabPanel",
@@ -106,49 +106,69 @@ df_daily.columns= ["datetime","action","valeur"]
 fig_date_action = px.line(df_daily,x="datetime", y="valeur", color="action", title="Action en fonction de la journée")
 
 
+colors = {
+    'background': 'rgb(50, 50, 50)',
+    'text': 'rgb(210, 210, 210)'
+}
 
 content = dbc.Container([ 
 html.Div([
-    html.P("acceuil"),
+    html.Br(),
+    html.H1("Acceuil"),
+    
+    
+    html.P("Ce projet à été réalisé dans le carde d'une collaboration entre les étudiants de la formation SISE et d'OPSIE mélangeant l'aspect technique de la sécurisation, récupération de données à partir de logs ainsi l'analyse de celles-ci. En effet les étudiant d'OPSIE ont du dans, un premier temps, récupérer les données. Dans un second temps, les étudiants de SISE ont du les réaliser un traitement et analyse sur ces dernières. Nous avions 1 jour et demie pour réaliser ce projet avec par la suite comme critère d'évaluation : une soutenance et un rapport pdf.")
+    
+    
+    
 ], id="Accueil-tab"),
 html.Div([
-    html.P("Stats robin"),
+    html.Br(),
+    html.H1("Quelques statistiques..."),
     html.Div([
         
-        html.Div(dcc.Graph(figure=fig_regles,style={'width': '40%'})),
+        html.Div(dcc.Graph(figure=fig_regles,style = {'width': '600px'})),
 
-        html.Div(dcc.Graph(figure=fig_protocoles, style={'width': '40%'}))
-    ],style={'display': 'iflex'}), 
+        html.Div(dcc.Graph(figure=fig_protocoles,style = {'width': '600px'}))
+    ], style = {'display': 'flex', "border" : "10px black solid",'width': '30%',"margin-left" : "40px"}), 
     
     
     html.Div([
         
-        dcc.Graph(figure=fig_10_regles_udp),
+        dcc.Graph(figure=fig_10_regles_udp,style = {'width': '160%'}),
 
-        dcc.Graph(figure=fig_5_regles_tcp)
-    ] ,  style={'display': 'flex', "border" : "10px black solid"}), 
+        dcc.Graph(figure=fig_5_regles_tcp,style = {'width': '160%'})
+    ] ,  style = {'display': 'flex', 'width': '30%', "margin-left" : "40px", "border" : "10px black solid"}), 
     
      html.Div([
         
-        dcc.Graph(figure=fig_proto_action),
+        dcc.Graph(figure=fig_proto_action, style = {'width': '160%'}),
 
-        dcc.Graph(figure=fig_ipsource)
-    ] , style={'display': 'flex', "border" : "10px black solid"}), 
+        dcc.Graph(figure=fig_ipsource, style = {'width': '160%'})
+    ] , style = {'display': 'flex', 'width': '30%', "margin-left" : "40px", "border" : "10px black solid"}), 
     
     
      html.Div([
         
-        dcc.Graph(figure=fig_ipsource_action),
+        dcc.Graph(figure=fig_ipsource_action,style = {'width': '160%'}),
 
-        dcc.Graph(figure=fig_date_action)
-    ] , style={'display': 'flex'}), 
+        dcc.Graph(figure=fig_date_action, style = {'width': '160%'})
+    ] ,style = {'display': 'flex', 'width': '30%', "margin-left" : "40px", "border" : "10px black solid"}), 
     
 ], id="Statistique-tab"),
 html.Div([
     
-    html.P("Historique"),
+    html.Br(),
+    html.H1("Historique"),
     dash_table.DataTable(df_der.to_dict('records'),[{"name": i, "id": i} for i in df_der.columns],
-                         filter_action='native', page_size=10),
+                         filter_action='native', page_size=10, style_header={
+        'backgroundColor': 'rgb(30, 30, 30)',
+        'color': 'rgb(210, 210, 210)'
+    },
+    style_data={
+        'backgroundColor': 'rgb(50, 50, 50)',
+        'color': 'rgb(210, 210, 210)'
+    },),
     
     html.Br(),
     
@@ -160,12 +180,12 @@ html.Div([
     
     html.Div([
         
-        dcc.Graph(id='pieregle'),
+        dcc.Graph(id='pieregle', style = {'width': '160%'}),
 
-        dcc.Graph(id='pieAction')
-    ] , style={'display': 'flex'}), 
+        dcc.Graph(id='pieAction', style = {'width': '160%'})
+    ] , style = {'display': 'flex', 'width': '30%', "margin-left" : "40px"}), 
     
-    html.Div(dcc.Graph(id='traffic')),
+    html.Div(dcc.Graph(id='traffic'), style = {'display': 'inline-block', 'width': '80%', "margin-left" : "130px", "border" : "10px black solid"}),
     html.Br(),
     
     
@@ -175,7 +195,6 @@ html.Div([
 
 #Rendus de l'application
 app.layout = html.Div([head, content])
-
 
 @app.callback([Output("Accueil-tab", "style"),Output("Statistique-tab", "style"), Output("Historique-tab", "style")],
                                                                 [Input("tabPanel","active_tab")])
@@ -191,7 +210,7 @@ def render_tab_content(active_tab):
 
             return [on, off, off]
 
-        elif active_tab == "Statistique":
+        elif active_tab == "Statistiques":
 
             return [off, on, off]
 
