@@ -15,7 +15,7 @@ source build_n_run.sh
 
 
 ## sous WINDOWS
-Pour installer l'application il faut télécharger le projet en zip ou via un git clone puis éxecuter le code suiant à la racide du projet
+Pour installer l'application il faut télécharger le projet en zip ou via un git clone puis éxecuter le code suivant à la racide du projet
 
 ```bash
 docker build -t groupe5challenges .
