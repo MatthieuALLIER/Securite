@@ -1,7 +1,8 @@
 # Securite
 
+#Pour l'application :
 
-# Installation cia le script sh
+# Installation via le script sh
 Pour installer l'application il faut télécharger le projet en zip ou via un git clone puis éxecuter le code suivant à la racine du projet.
 
 # INFORMATION IMPORTANTE
@@ -33,3 +34,8 @@ puis pour lancer le container il faut executer la commande suivante en modifiant
 docker run --link ma-mariadb:localhost -p 8050:8050 -e HOST=0.0.0.0 -e DB_HOST=localhost -e DB_TABLE=FW -e DB_USERNAME=root -e DB_PASSWORD=mypass123 -e DB_DATABASE=Logs_fw groupe5challenges
 ```
 On accède à l'application en cliquant sur le port visible à côté du container créé dans Docker desktop
+
+#Pour le modèle : 
+
+Il suffit d'aller dans le fichier model.py, modifier les informations d'acces à la base (une base en local via xampp suffit) et lance le script
+La base aura alors une nouvelle table composée des prédictions (0 pour flux licites et 1 pour flux illicite)
