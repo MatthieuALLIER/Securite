@@ -107,7 +107,7 @@ df_action_top1_ipsource=df.loc[df.ipsrc=="109.234.162.235"]
 action_top1_ipsource=df_action_top1_ipsource.action.value_counts()
 action_top1_ipsource=pd.DataFrame(action_top1_ipsource.reset_index())
 
-fig_ipsource_action = px.pie(action_top1_ipsource,values="action", names="index", title="Distribution des différents Ip Sources")
+fig_ipsource_action = px.pie(action_top1_ipsource,values="action", names="index", title="Action de l'IPsource 109.234.162.235 ")
 
 # Graphique 9 : Nombre d'action par jour 
 
@@ -133,8 +133,11 @@ html.Div([
     html.H1("Acceuil"),
     
     
-    html.P("Ce projet à été réalisé dans le carde d'une collaboration entre les étudiants de la formation SISE et d'OPSIE mélangeant l'aspect technique de la sécurisation, récupération de données à partir de logs ainsi l'analyse de celles-ci. En effet les étudiant d'OPSIE ont du dans, un premier temps, récupérer les données. Dans un second temps, les étudiants de SISE ont du les réaliser un traitement et analyse sur ces dernières. Nous avions 1 jour et demie pour réaliser ce projet avec par la suite comme critère d'évaluation : une soutenance et un rapport pdf.")
-    
+    html.P("Ce projet à été réalisé dans le carde d'une collaboration entre les étudiants de la formation SISE et d'OPSIE mélangeant l'aspect technique de la sécurisation, récupération de données à partir de logs ainsi l'analyse de celles-ci. En effet les étudiant d'OPSIE ont du dans, un premier temps, récupérer les données."),
+    html.Br(),
+    html.P("Dans un second temps, les étudiants de SISE ont du les réaliser un traitement et analyse sur ces dernières. Nous avions 1 jour et demi pour réaliser ce projet avec par la suite comme critère d'évaluation : une soutenance et un rapport pdf."),
+    html.Br(),
+    html.P("La base de données fournie par les étudiants OPSIE comptait environ 17 000 000 de données. Toutefois, pour limiter les temps de calcul, notre tableau de bord aura comme source un fichier de 1 000 000 de données.")
     
     
 ], id="Accueil-tab"),
@@ -270,11 +273,8 @@ def Graph(value):
                  }, title="Nombre d'action par jour")
 
     return fig_regles, fig_action, fig_date_action
-
     
-    
-
 
 #Lancement de l'application
 if __name__ == '__main__':
-    app.run_server(debug = True)
+    app.run_server()
