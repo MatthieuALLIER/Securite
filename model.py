@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.ensemble import IsolationForest
 from sklearn.model_selection import train_test_split
-import pickle
+import sqlalchemy
 
 #load data
 con = connexion("localhost", "root", "", "securite")
@@ -40,7 +40,10 @@ isScan = findScan.predict(dfFormat.drop("sameport", axis = 1))
 pred = ((isBrut == 1) | (isScan == 1)).astype(int)
 
 pd.Series(pred).value_counts()
-pd.Series(pred).to_sql("result", con, if_exists="replace")
+
+engine = sqlalchemy.create_engine("mysql+pymysql://root:@localhost/securite")
+
+pd.Series(pred).to_sql("result", engine, if_exists="replace")
 
 
 
