@@ -5,7 +5,8 @@ from connexion import connexion
 import pandas as pd 
 import plotly.express as px
 import numpy as np
-
+import os
+ 
 db_host = os.environ.get('DB_HOST')
 db_username = os.environ.get('DB_USERNAME')
 db_password = os.environ.get('DB_PASSWORD')
