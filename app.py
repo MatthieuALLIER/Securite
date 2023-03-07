@@ -6,16 +6,16 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 import os
- 
+
 db_host = os.environ.get('DB_HOST')
 db_username = os.environ.get('DB_USERNAME')
 db_password = os.environ.get('DB_PASSWORD')
 db_database = os.environ.get('DB_DATABASE')
-
+db_table = os.environ.get('DB_TABLE')
 
 
 con = connexion(db_host, db_username, db_password, db_database)
-req = "SELECT * FROM ( SELECT * FROM fw ORDER BY datetime DESC LIMIT 1000000 )VAR1 ORDER BY datetime ASC"
+req = f"SELECT * FROM ( SELECT * FROM {db_table} ORDER BY datetime DESC LIMIT 1000000 )VAR1 ORDER BY datetime ASC"
 df = pd.read_sql(req,con)
 
 #Création de l'interface
