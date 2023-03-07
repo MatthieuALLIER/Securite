@@ -1,5 +1,22 @@
 # Securite
 
+
+# Installation cia le script sh
+Pour installer l'application il faut télécharger le projet en zip ou via un git clone puis éxecuter le code suiant à la racide du projet
+
+# INFORMATION IMPORTENTE
+Le fochier build_n_run.sh suppose le fait que le container ma-mariadb fourni existe et tourne sur la machine avant le lancement des fichiers .sh
+
+## sous WINDOWS
+```bash
+sh build_n_run.sh
+```
+## sous LINUX
+```bash
+source build_n_run.sh
+```
+
+# Installation manuelle
 Pour installer l'application il faut télécharger le projet en zip ou via un git clone puis éxecuter le code suiant à la racide du projet
 
 ```bash
