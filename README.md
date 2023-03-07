@@ -35,7 +35,7 @@ docker run --link ma-mariadb:localhost -p 8050:8050 -e HOST=0.0.0.0 -e DB_HOST=l
 ```
 On accède à l'application en cliquant sur le port visible à côté du container créé dans Docker desktop
 
-#Pour le modèle : 
+# Pour le modèle : 
 
 Il suffit d'aller dans le fichier model.py, modifier les informations d'acces à la base (une base en local via xampp suffit) et lance le script
 La base aura alors une nouvelle table composée des prédictions (0 pour flux licites et 1 pour flux illicite)
