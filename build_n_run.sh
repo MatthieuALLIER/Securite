@@ -1,0 +1,2 @@
+docker build -t groupe5challenges . &&
+docker run --link ma-mariadb:localhost -p 8050:8050 -e HOST=0.0.0.0 -e DB_HOST=localhost -e DB_USERNAME=root -e DB_PASSWORD=mypass123 -e DB_DATABASE=Logs_fw groupe5challenges
