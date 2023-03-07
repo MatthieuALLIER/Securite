@@ -146,33 +146,33 @@ html.Div([
     html.H1("Quelques statistiques..."),
     html.Div([
         
-        html.Div(dcc.Graph(figure=fig_regles,style = {'width': '600px'})),
+        dcc.Graph(figure=fig_regles,style = {'width': '50%'}),
 
-        html.Div(dcc.Graph(figure=fig_protocoles,style = {'width': '600px'}))
-    ], style = {'display': 'flex', "border" : "10px black solid",'width': '30%',"margin-left" : "40px"}), 
+        dcc.Graph(figure=fig_protocoles,style = {'width': '50%'})
+    ], style = {'display': 'flex', "margin-left" : "40px", "border" : "10px black solid"}), 
     
     
     html.Div([
         
-        dcc.Graph(figure=fig_10_regles_udp,style = {'width': '160%'}),
+        dcc.Graph(figure=fig_10_regles_udp,style = {'width': '50%'}),
 
-        dcc.Graph(figure=fig_5_regles_tcp,style = {'width': '160%'})
-    ] ,  style = {'display': 'flex', 'width': '30%', "margin-left" : "40px", "border" : "10px black solid"}), 
+        dcc.Graph(figure=fig_5_regles_tcp,style = {'width': '50%'})
+    ] ,  style = {'display': 'flex', "margin-left" : "40px", "border" : "10px black solid"}), 
     
      html.Div([
         
-        dcc.Graph(figure=fig_proto_action, style = {'width': '160%'}),
+        dcc.Graph(figure=fig_proto_action, style = {'width': '50%'}),
 
-        dcc.Graph(figure=fig_ipsource, style = {'width': '160%'})
-    ] , style = {'display': 'flex', 'width': '30%', "margin-left" : "40px", "border" : "10px black solid"}), 
+        dcc.Graph(figure=fig_ipsource, style = {'width': '50%'})
+    ] , style = {'display': 'flex', "margin-left" : "40px", "border" : "10px black solid"}), 
     
     
      html.Div([
         
-        dcc.Graph(figure=fig_ipsource_action,style = {'width': '160%'}),
+        dcc.Graph(figure=fig_ipsource_action,style = {'width': '50%'}),
 
-        dcc.Graph(figure=fig_date_action, style = {'width': '160%'})
-    ] ,style = {'display': 'flex', 'width': '30%', "margin-left" : "40px", "border" : "10px black solid"}), 
+        dcc.Graph(figure=fig_date_action, style = {'width': '50%'})
+    ] ,style = {'display': 'flex', "margin-left" : "40px", "border" : "10px black solid"}), 
     
 ], id="Statistique-tab"),
 html.Div([
@@ -200,10 +200,10 @@ html.Div([
     
     html.Div([
         
-        dcc.Graph(id='pieregle', style = {'width': '160%'}),
+        dcc.Graph(id='pieregle', style = {'width': '50%'}),
 
-        dcc.Graph(id='pieAction', style = {'width': '160%'})
-    ] , style = {'display': 'flex', 'width': '30%', "margin-left" : "40px"}), 
+        dcc.Graph(id='pieAction', style = {'width': '50%'})
+    ] , style = {'display': 'flex', "margin-left" : "40px"}), 
     
     html.Div(dcc.Graph(id='traffic'), style = {'display': 'inline-block', 'width': '80%', "margin-left" : "130px", "border" : "10px black solid"}),
     html.Br(),
