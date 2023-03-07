@@ -117,6 +117,7 @@ action_top1_ipsource=pd.DataFrame(action_top1_ipsource.reset_index())
 fig_ipsource_action = px.pie(action_top1_ipsource,values="action", names="index", title="Action de l'IPsource 109.234.162.235 ")
 
 # Graphique 9 : Nombre d'action par jour 
+df['datetime'] = df['datetime'].astype("datetime64[ns]")
 
 df_daily = df.groupby([df['datetime'].dt.date,"action"]).size()
 df_daily  = pd.DataFrame(df_daily.reset_index())
