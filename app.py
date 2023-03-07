@@ -8,10 +8,8 @@ import numpy as np
 
 
 con = connexion("localhost", "root", "", "securite")
-req = "SELECT * FROM fw"
+req = "SELECT * FROM ( SELECT * FROM fw ORDER BY datetime DESC LIMIT 1000000 )VAR1 ORDER BY datetime ASC"
 df = pd.read_sql(req,con)
-
-df_der = df.tail(100000)
 
 #Création de l'interface
 app = Dash(__name__, external_stylesheets=[dbc.themes.SLATE], title='Challenge sécurité')
@@ -39,14 +37,20 @@ head = dbc.Container([
 regles = df.policyid.value_counts()
 regles  = pd.DataFrame(regles.reset_index())
 
-fig_regles = px.bar(regles,x="index", y="policyid", title="Classement des règles")
+fig_regles = px.bar(regles,x="index", y="policyid",labels={
+                     "index": "Les régles (polycid)",
+                     "policyid": "Effectif",
+                 }, title="Classement des règles")
 
 # Graphique 2 : Utilisation des différents protocoles 
 
 protocoles = df.proto.value_counts()
 protocoles = pd.DataFrame(protocoles.reset_index())
 
-fig_protocoles = px.bar(protocoles,x="index", y="proto", title="Utilisation des différents protocoles")
+fig_protocoles = px.bar(protocoles,x="index", y="proto", labels={
+                     "index": "Les protocoles",
+                     "proto": "Effectif",
+                 },title="Utilisation des différents protocoles")
 
 # Graphique 3 : Top 10 des règles avec le protocole UDP
 
@@ -57,7 +61,10 @@ regles_udp  = pd.DataFrame(regles.reset_index())
 
 top_10_regles_udp = regles_udp.head(10)
 
-fig_10_regles_udp = px.bar(top_10_regles_udp,x="index", y="policyid", title="Classement des 5 règles les plus utilisées pour le protocoles TCP")
+fig_10_regles_udp = px.bar(top_10_regles_udp,x="index", y="policyid", labels={
+                     "index": "Les régles (polycid)",
+                     "policyid": "Effectif",
+                 }, title="Classement des 10 règles les plus utilisées pour le protocoles UDP")
 
 # Graphique 4 : Top 5 des règles avec le protocole TCP
 
@@ -68,7 +75,10 @@ regles_tcp  = pd.DataFrame(regles.reset_index())
 
 top_5_regles_tcp = regles_tcp.head(5)
 
-fig_5_regles_tcp = px.bar(top_5_regles_tcp,x="index", y="policyid", title="Classement des 5 règles les plus utilisées pour le protocoles TCP")
+fig_5_regles_tcp = px.bar(top_5_regles_tcp,x="index", y="policyid",labels={
+                     "index": "Les régles (polycid)",
+                     "policyid": "Effectif",
+                 }, title="Classement des 5 règles les plus utilisées pour le protocoles TCP")
 
 # Graphique 6 : action en fonction du protocole
 
@@ -77,7 +87,10 @@ proto_action  = pd.DataFrame(proto_action.reset_index())
 
 proto_action.columns= ["proto","action","valeur"]
 
-fig_proto_action = px.bar(proto_action,x="proto", y="valeur", color="action", title="Action en fonction du protocole")
+fig_proto_action = px.bar(proto_action,x="proto", y="valeur", labels={
+                     "proto": "Les protocoles",
+                     "valeur": "Effectif",
+                 }, color="action", title="Action en fonction du protocole")
 
 # Graphique 7 : Distribution des Ipsource 
 
@@ -103,7 +116,10 @@ df_daily  = pd.DataFrame(df_daily.reset_index())
 
 df_daily.columns= ["datetime","action","valeur"]
 
-fig_date_action = px.line(df_daily,x="datetime", y="valeur", color="action", title="Action en fonction de la journée")
+fig_date_action = px.line(df_daily,x="datetime", y="valeur", color="action", labels={
+                     "datetime": "Date en jour",
+                     "valeur": "Effectif",
+                 },title="Action en fonction de la journée")
 
 
 colors = {
@@ -160,7 +176,7 @@ html.Div([
     
     html.Br(),
     html.H1("Historique"),
-    dash_table.DataTable(df_der.to_dict('records'),[{"name": i, "id": i} for i in df_der.columns],
+    dash_table.DataTable(df.to_dict('records'),[{"name": i, "id": i} for i in df.columns],
                          filter_action='native', page_size=10, style_header={
         'backgroundColor': 'rgb(30, 30, 30)',
         'color': 'rgb(210, 210, 210)'
@@ -173,8 +189,9 @@ html.Div([
     html.Br(),
     
     dcc.Dropdown(
-       id='dropdown', options = list(df_der.ipsrc.unique()), value = "167.94.146.7"
+       options = df.ipsrc.unique(), id='dropdown', value = "167.94.138.107",
     ),
+    
     
     html.Br(),
     
@@ -230,7 +247,10 @@ def Graph(value):
     regles = df[df.ipsrc == value].policyid.value_counts()
     regles  = pd.DataFrame(regles.reset_index())
 
-    fig_regles = px.bar(regles,x="index", y="policyid", title="Classement des règles")
+    fig_regles = px.bar(regles,x="index", y="policyid", labels={
+                     "index": "Les régles (polycid)",
+                     "policyid": "Effectif",
+                 }, title="Classement des règles")
     
     fig_action = px.pie(df[df.ipsrc == value], values = df[df.ipsrc == value].action.value_counts(), names =df[df.ipsrc == value].action.unique(), title="Proportion des actions")
     
@@ -244,7 +264,10 @@ def Graph(value):
     
     print(df_daily)
 
-    fig_date_action = px.line(df_daily,x="datetime", y="valeur", title="Nb de ping l'utilisateur dans la journée")
+    fig_date_action = px.line(df_daily,x="datetime", y="valeur", labels={
+                     "datetime": "Date en jour",
+                     "valeur": "Nombre d'actions",
+                 }, title="Nombre d'action par jour")
 
     return fig_regles, fig_action, fig_date_action
 

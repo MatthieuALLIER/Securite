@@ -1,10 +1,13 @@
-# Execution du module format pour récupérer le fichier issu de la base de données
-exec(open("format.py").read())
-
 #Import des modules de graphiques
 import plotly.express as px
+from connexion import connexion
+import pandas as pd
 import plotly.io as pio
 pio.renderers.default="browser" 
+
+con = connexion("localhost", "root", "", "securite")
+req = "SELECT * FROM ( SELECT * FROM fw ORDER BY datetime DESC LIMIT 1000000 )VAR1 ORDER BY datetime ASC"
+df = pd.read_sql(req,con)
 
 # Graphique 1 : Classement des règles les plus utilisées
 
@@ -78,7 +81,7 @@ fig_ipsource_action.show()
 # Graphique 9 : Nombre d'action par jour 
 
 df_daily = df.groupby([df['datetime'].dt.date,"action"]).size()
-df_daily  = pd.DataFrame(df_hourly.reset_index())
+df_daily  = pd.DataFrame(df_daily.reset_index())
 
 df_daily.columns= ["datetime","action","valeur"]
 
